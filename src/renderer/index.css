@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --color-primary: #18181b;
+  /* Dark charcoal primary buttons in light mode */
+  --color-primary-dark: #09090b;
+
+  /* Crisp Minimal Light Mode */
+  --color-surface: #ffffff;
+  --color-surface-hover: #fafafa;
+  --color-sidebar: #f3f4f6;
+  --color-border: #e5e7eb;
+  --color-text: #030712;
+  --color-text-muted: #6b7280;
+}
+
+@layer base {
+  .dark {
+    --color-primary: #F1F1F4;
+    --color-primary-dark: #FFFFFF;
+
+    /* Dark Mode (Deep Slate) */
+    --color-surface: #111216;
+    --color-surface-hover: #18191E;
+    --color-sidebar: #0F1014;
+    --color-border: #282A33;
+    --color-text: #F1F1F4;
+    --color-text-muted: #8B8D98;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+#root {
+  width: 100%;
+  display: flex;
+}
