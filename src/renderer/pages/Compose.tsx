@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSettingsStore } from '../stores/settingsStore'
 import { useHistoryStore } from '../stores/historyStore'
-import { GeminiProvider } from '../providers/gemini/GeminiProvider'
+import { getAIProvider } from '../providers/factory'
 import { useEditor, EditorContent, Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
@@ -86,7 +86,7 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
 }
 
 export function Compose() {
-  const { geminiApiKey, googleClientId, googleClientSecret } = useSettingsStore()
+  const { provider, geminiApiKey, googleClientId, googleClientSecret } = useSettingsStore()
   const addHistoryItem = useHistoryStore(state => state.addHistoryItem)
 
   const [to, setTo] = useState('')
@@ -115,7 +115,7 @@ export function Compose() {
     setIsGenerating(true)
     setStatusMsg('Generating email...')
     try {
-      const ai = new GeminiProvider(geminiApiKey)
+      const ai = getAIProvider(provider, { gemini: geminiApiKey })
       const res = await ai.generateEmail({ prompt, tone })
       setSubject(res.subject)
       editor?.commands.setContent(res.body)
